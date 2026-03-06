@@ -1,0 +1,135 @@
+<div class="grid grid-cols-2 h-full max-lg:grid-cols-1">
+
+    <!-- LEFT PANEL -->
+    <div class="relative bg-stone-950 overflow-hidden flex flex-col justify-end p-14 panel-glow max-lg:hidden">
+        
+        <!-- LEFT STRIPE -->
+        <div class="absolute top-0 left-0 w-1.5 h-full gradient-bar"></div>
+
+        <!-- DOT GRID -->
+        <div class="dot-grid absolute inset-0 pointer-events-none"></div>
+
+        <!-- HUGE DECORATIVE "T" -->
+        <span class="absolute -top-14 -right-6 font-display font-bold text-[520px] leading-none text-white/3 select-none pointer-events-none">T</span>
+
+        <!-- FLOATING CARDS -->
+        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-56 h-72">
+            <div class="absolute w-40 h-24 top-0 left-0 rounded-2xl border border-white/8 bg-white/4 backdrop-blur-sm animate-float-1"></div>
+            <div class="absolute w-28 h-20 top-20 left-20 rounded-2xl border border-brand-red/30 bg-white/4 backdrop-blur-sm animate-float-2"></div>
+            <div class="absolute w-36 h-24 top-44 left-8 rounded-2xl border border-brand-gold/20 bg-white/4 backdrop-blur-sm animate-float-3"></div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="relative z-10">
+            <h2 class="font-display font-medium text-4xl text-white leading-snug mb-5">
+                Properti terbaik<br>
+                untuk <em class="text-brand-gold not-italic">Indonesia</em><br>
+                yang lebih maju.
+            </h2>
+            <p class="text-sm font-light text-white/40 leading-relaxed max-w-xs">
+                Platform manajemen properti terpadu dari Telkom Indonesia untuk portofolio aset yang lebih efisien.
+            </p>
+        </div>
+    </div>
+    <!-- END LEFT PANEL -->
+
+    <!-- RIGHT PANEL -->
+    <div class="relative flex flex-col items-center justify-center px-12 py-16 bg-stone-50 corner-glow">
+
+        <!-- FORM -->
+        <div class="w-full max-w-sm animate-slide-up">
+
+            <!-- LOGO -->
+             <div class="mb-10">
+                <div class="flex items-baseline gap-1 mb-1">
+                    <span class="font-body font-light text-xl tracking-wide text-stone-900">Telkom</span>
+                    <span class="font-display font-bold text-xl text-brand-red">Property</span>
+                </div>
+                <span class="text-[10px] font-medium tracking-widest text-stone-400 uppercase">by Telkom Indonesia</span>
+            </div>
+
+            <!-- ACCENT BAR -->
+            <div class="w-9 h-0.5 gradient-bar rounded-full mb-8"></div>
+            <h1 class="font-display text-2xl font-medium text-stone-900 mb-2">Selamat datang</h1>
+            <p class="text-sm font-light text-stone-400 mb-9">Masukkan kredensial Anda untuk melanjutkan</p>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                <!-- FIELD USERNAME -->
+                <div class="mb-5">
+                    <label for="username" class="block text-[11px] font-medium tracking-widest uppercase text-stone-400 mb-2">
+                        Username
+                    </label>
+                    <input
+                        id="username"
+                        formControlName="username"
+                        type="text"
+                        placeholder="Masukkan username Anda"
+                        autocomplete="username"
+                        class="input-field w-full h-12 px-4 rounded-xl border border-stone-200 bg-white text-[15px] text-stone-900
+                        placeholder:text-stone-300 outline-none transition-all duration-200"
+                        [attr.aria-invalid]="usernameControl?.invalid && usernameControl?.touched"
+                        [class.!border-red-500]="usernameControl?.invalid && usernameControl?.touched"
+                    />
+                </div>
+    
+                <!-- FIELD PASSWORD -->
+                <div class="mb-5">
+                    <label for="password" class="block text-[11px] font-medium tracking-widest uppercase text-stone-400 mb-2">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input
+                            id="password"
+                            formControlName="password"
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            class="input-field w-full h-12 px-4 pr-24 rounded-xl border border-stone-200 bg-white text-[15px]
+                            text-stone-900 placeholder:text-stone-300 outline-none transition-all duration-200"
+                            [type]="passwordType"
+                            [attr.aria-invalid]="passwordControl?.invalid && passwordControl?.touched"
+                            [class.!border-red-500]="passwordControl?.invalid && passwordControl?.touched"
+                        />
+                        <button
+                            type="button"
+                            (click)="onTogglePassword()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-medium tracking-widest uppercase
+                            text-stone-400 hover:text-brand-red transition-colors duration-200 px-2 py-1 cursor-pointer"
+                        >
+                            {{ isPasswordVisible() ? 'Sembunyikan' : 'Lihat' }}
+                        </button>
+                    </div>
+                </div>
+    
+                <!-- SUBMIT BUTTON -->
+                <button type="submit" class="btn-gradient group relative w-full flex justify-center h-13 py-3.5 rounded-xl
+                    text-white text-[14px] font-medium tracking-widest uppercase overflow-hidden cursor-pointer transition-all 
+                    duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(192,19,27,0.4)]
+                    shadow-[0_4px_20px_rgba(192,19,27,0.3)] active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                    [disabled]="loginForm.invalid || isLoading()"
+                >
+                    @if (isLoading()) {
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                    } @else {
+                        Login
+                    }
+                </button>
+                
+            </form>
+
+        </div>
+
+        <!-- HAK CIPTA -->
+         <p class="absolute bottom-6 text-[11px] text-stone-300 tracking-wide">
+            ©{{ yearText }} PT Samudra Aplikasi Indonesia
+        </p>
+
+    </div>
+
+    <!-- END RIGHT PANEL -->
+
+</div>

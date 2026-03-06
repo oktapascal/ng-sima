@@ -68,8 +68,8 @@
                         autocomplete="username"
                         class="input-field w-full h-12 px-4 rounded-xl border border-stone-200 bg-white text-[15px] text-stone-900
                         placeholder:text-stone-300 outline-none transition-all duration-200"
-                        [attr.aria-invalid]="usernameControl?.invalid && usernameControl?.touched"
-                        [class.!border-red-500]="usernameControl?.invalid && usernameControl?.touched"
+                        [attr.aria-invalid]="usernameControl.invalid && usernameControl.touched"
+                        [class.!border-red-500]="usernameControl.invalid && usernameControl.touched"
                     />
                 </div>
     
@@ -87,8 +87,8 @@
                             class="input-field w-full h-12 px-4 pr-24 rounded-xl border border-stone-200 bg-white text-[15px]
                             text-stone-900 placeholder:text-stone-300 outline-none transition-all duration-200"
                             [type]="passwordType"
-                            [attr.aria-invalid]="passwordControl?.invalid && passwordControl?.touched"
-                            [class.!border-red-500]="passwordControl?.invalid && passwordControl?.touched"
+                            [attr.aria-invalid]="passwordControl.invalid && passwordControl.touched"
+                            [class.!border-red-500]="passwordControl.invalid && passwordControl.touched"
                         />
                         <button
                             type="button"
@@ -118,7 +118,10 @@
                         Login
                     }
                 </button>
-                
+
+                @if (errorMessage()) {
+                    <p class="mt-4 text-sm text-red-600" role="alert">{{ errorMessage() }}</p>
+                }
             </form>
 
         </div>

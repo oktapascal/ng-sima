@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { finalize, take } from 'rxjs';
+
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
@@ -14,25 +15,22 @@ import { AuthService } from '../../core/auth/auth.service';
 export class AuthComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
 
-  // Signals for state
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly isPasswordVisible = signal(false);
-  readonly year = new Date().getFullYear();
 
-  readonly loginForm = this.fb.group({
+  readonly loginForm = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   get usernameControl() {
-    return this.loginForm.get('username');
+    return this.loginForm.controls.username;
   }
 
   get passwordControl() {
-    return this.loginForm.get('password');
+    return this.loginForm.controls.password;
   }
 
   get passwordType() {
@@ -56,20 +54,21 @@ export class AuthComponent {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    const { username, password } = this.loginForm.value;
+    const { username, password } = this.loginForm.getRawValue();
 
-    this.authService.login(username!, password!).subscribe({
-      next: () => {
-        this.isLoading.set(false);
-        // Navigate to dashboard or home after login
-        // For now, maybe just stay here or go to root if root is protected later
-        console.log('Login successful');
-      },
-      error: () => {
-        this.isLoading.set(false);
-        this.errorMessage.set('Invalid username or password.');
-      },
-    });
+    this.authService
+      .login(username, password)
+      .pipe(
+        take(1),
+        finalize(() => this.isLoading.set(false))
+      )
+      .subscribe({
+        next: () => {
+          console.log('Login successful');
+        },
+        error: () => {
+          this.errorMessage.set('Invalid username or password.');
+        },
+      });
   }
-  
 }

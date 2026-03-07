@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize, take } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
@@ -19,6 +20,7 @@ export class AuthComponent implements OnDestroy {
 
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   private errorAlertTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
   readonly isLoading = signal(false);
@@ -74,7 +76,7 @@ export class AuthComponent implements OnDestroy {
       )
       .subscribe({
         next: () => {
-          console.log('Login successful');
+          this.router.navigate(['/dashboard-home']);
         },
         error: () => {
           this.showErrorMessage('Invalid username or password.');

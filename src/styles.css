@@ -4,17 +4,41 @@
 
 /* Custom theme (pengganti theme.extend di v3) */
 @theme {
-  --color-brand-red: #C0131B;
-  --color-brand-red-dk: #8E0D13;
-  --color-brand-gold: #E8A020;
+    /* Brand merah */
+    --color-brand-red: #C0131B;
+    --color-brand-red-dk: #8E0D13;
+    --color-brand-gold: #E8A020;
+    --color-brand-50:  #fef2f2;
+    --color-brand-100: #fee2e2;
+    --color-brand-200: #fecaca;
+    --color-brand-700: #b91c1c;
+    --color-brand-800: #991b1b;
+    --color-brand-900: #7f1d1d;
 
-  --font-display: "Playfair Display", serif;
-  --font-body: "DM Sans", sans-serif;
+    /* Gold */
+    --color-gold-400: #d4a017;
+    --color-gold-500: #b8890e;
 
-  --animate-slide-up: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
-  --animate-float-1: float 6s ease-in-out infinite;
-  --animate-float-2: float 5s ease-in-out infinite;
-  --animate-float-3: float 7s ease-in-out infinite reverse;
+    /* Warm neutral */
+    --color-warm-50:  #fdf8f4;
+    --color-warm-100: #f5f0eb;
+    --color-warm-200: #e8ddd8;
+    --color-warm-300: #a89490;
+    --color-warm-600: #6b5e5a;
+    --color-warm-700: #4a3a36;
+    --color-warm-900: #1a0a08;
+
+    --font-display: "Playfair Display", serif;
+    --font-body: "DM Sans", sans-serif;
+
+    /* Animasi */
+    --animate-slide-up: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+    --animate-float-1: float 6s ease-in-out infinite;
+    --animate-float-2: float 5s ease-in-out infinite;
+    --animate-float-3: float 7s ease-in-out infinite reverse;
+    --animate-fade-slide-up: fadeSlideUp 0.35s ease both;
+    --animate-pulse-dot:     pulseDot 2s ease-in-out infinite;
+
 }
 
 /* Keyframes */
@@ -26,6 +50,16 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-12px); }
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.8); }
 }
 
 html, body {
@@ -84,4 +118,63 @@ html, body {
 .input-field:focus {
     border-color: #C0131B;
     box-shadow: 0 0 0 4px rgba(192,19,27,0.09);
+}
+
+/* Sidebar: garis gradasi merah–emas di atas */
+.sidebar-bar::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-brand-700) 0%, var(--color-gold-400) 100%);
+    z-index: 10;
+}
+
+/* Indikator aktif di sisi kiri nav item */
+.nav-active-indicator::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--color-brand-700);
+    border-radius: 0 2px 2px 0;
+}
+
+/* Dot bullet sub-menu */
+.sub-dot::before {
+    content: '';
+    position: absolute;
+    left: 1.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0.4;
+}
+.sub-dot-active::before { opacity: 1; }
+
+/* Scrollbar sidebar */
+.sidebar-scroll::-webkit-scrollbar       { width: 3px; }
+.sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-brand-700) 20%, transparent); border-radius: 2px; }
+
+/* Animasi buka/tutup child menu */
+.nav-children {
+    transition: height 0.25s ease, opacity 0.25s ease;
+    overflow: hidden;
+}
+
+/* Sidebar collapse */
+.sidebar-collapsed {
+    width: 0 !important;
+    overflow: hidden;
+}
+aside {
+    transition: width 0.25s ease;
 }

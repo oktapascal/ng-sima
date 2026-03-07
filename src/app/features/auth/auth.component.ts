@@ -15,6 +15,7 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 })
 export class AuthComponent implements OnDestroy {
   private static readonly ERROR_ALERT_TIMEOUT_MS = 2000;
+  private static readonly ERROR_ALERT_ANIMATION_MS = 300;
 
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
@@ -22,6 +23,7 @@ export class AuthComponent implements OnDestroy {
 
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  readonly isErrorAlertVisible = signal(false);
   readonly isPasswordVisible = signal(false);
 
   readonly loginForm = this.fb.nonNullable.group({
@@ -50,7 +52,7 @@ export class AuthComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.clearErrorAlertTimeout();
+    this.clearErrorMessage();
   }
 
   onSubmit(): void {
@@ -84,15 +86,27 @@ export class AuthComponent implements OnDestroy {
     this.clearErrorAlertTimeout();
     this.errorMessage.set(message);
 
+    requestAnimationFrame(() => this.isErrorAlertVisible.set(true));
+
     this.errorAlertTimeoutId = setTimeout(() => {
-      this.errorMessage.set(null);
-      this.errorAlertTimeoutId = null;
+      this.hideErrorMessage();
     }, AuthComponent.ERROR_ALERT_TIMEOUT_MS);
   }
 
   private clearErrorMessage(): void {
     this.clearErrorAlertTimeout();
+    this.isErrorAlertVisible.set(false);
     this.errorMessage.set(null);
+  }
+
+  private hideErrorMessage(): void {
+    this.clearErrorAlertTimeout();
+    this.isErrorAlertVisible.set(false);
+
+    this.errorAlertTimeoutId = setTimeout(() => {
+      this.errorMessage.set(null);
+      this.errorAlertTimeoutId = null;
+    }, AuthComponent.ERROR_ALERT_ANIMATION_MS);
   }
 
   private clearErrorAlertTimeout(): void {

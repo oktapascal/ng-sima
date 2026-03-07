@@ -37,7 +37,7 @@
     <div class="relative flex flex-col items-center justify-center px-12 py-16 bg-stone-50 corner-glow">
 
         @if (errorMessage(); as message) {
-            <app-alert-box [message]="message"></app-alert-box>
+            <app-alert-box [message]="message" [isVisible]="isErrorAlertVisible()"></app-alert-box>
         }
 
         <!-- FORM -->

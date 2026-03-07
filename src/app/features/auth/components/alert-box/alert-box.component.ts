@@ -10,4 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class AlertBoxComponent {
   readonly message = input.required<string>();
+  readonly isVisible = input(true);
 }

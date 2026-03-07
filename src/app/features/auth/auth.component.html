@@ -36,6 +36,10 @@
     <!-- RIGHT PANEL -->
     <div class="relative flex flex-col items-center justify-center px-12 py-16 bg-stone-50 corner-glow">
 
+        @if (errorMessage(); as message) {
+            <app-alert-box [message]="message"></app-alert-box>
+        }
+
         <!-- FORM -->
         <div class="w-full max-w-sm animate-slide-up">
 
@@ -119,9 +123,6 @@
                     }
                 </button>
 
-                @if (errorMessage()) {
-                    <p class="mt-4 text-sm text-red-600" role="alert">{{ errorMessage() }}</p>
-                }
             </form>
 
         </div>

@@ -2,7 +2,7 @@
   
   <!-- SIDEBAR -->
   <aside id="sidebar" class="sidebar-bar relative flex w-64 shrink-0 flex-col
-  bg-white shadow-[2px_0_12px_color-mix(in_srgb,var(--color-warm-900)_7%,transparent)]">
+  bg-white shadow-[2px_0_12px_color-mix(in_srgb,var(--color-warm-900)_7%,transparent)]"  [class.sidebar-collapsed]="!isSidebarOpen()">
 
     <!-- LOGO -->
     <a href="#" class="relative z-10 flex h-[60px] shrink-0 items-center gap-2.5 border-b border-warm-200 px-5 no-underline">
@@ -33,18 +33,25 @@
       <div class="mb-1">
         <p class="px-5 pb-1.5 pt-3 text-[10px] font-semibold uppercase tracking-[1.2px] text-warm-600/70">Transaksi</p>
         <button class="nav-parent relative mx-2.5 flex w-[calc(100%-20px)] cursor-pointer items-center gap-2.5 rounded-md px-3 py-2.5
-        text-[13.5px] font-medium text-warm-600 transition-all duration-150 hover:bg-brand-50 hover:text-warm-700">
+        text-[13.5px] font-medium text-warm-600 transition-all duration-150 hover:bg-brand-50 hover:text-warm-700" 
+        type="button"
+        (click)="toggleTransactionMenu()"
+        [attr.aria-expanded]="isTransactionMenuOpen()">
           <svg class="size-[18px] shrink-0 opacity-70" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
             <path d="M4 4h12M4 8h8M4 12h10M4 16h6"/><path d="M16 10l2 2-2 2"/>
           </svg>
           <span class="flex-1 text-left">Transaksi</span>
-          <svg class="nav-chevron size-3.5 rotate-180 opacity-60 transition-transform duration-200" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-chevron size-3.5 rotate-180 opacity-60 transition-transform duration-200" [attr.aria-expanded]="isTransactionMenuOpen()" [class.rotate-180]="isTransactionMenuOpen()" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 6l4 4 4-4"/>
           </svg>
         </button>
 
         <!-- SUB ITEMS -->
-        <div class="nav-children overflow-hidden transition-all duration-300">
+        <div class="nav-children overflow-hidden" 
+        [style.maxHeight]="isTransactionMenuOpen() ? '140px' : '0px'"
+        [style.opacity]="isTransactionMenuOpen() ? '1' : '0'"
+        [style.transform]="isTransactionMenuOpen() ? 'translateY(0)' : 'translateY(-6px)'"
+        [class.pointer-events-none]="!isTransactionMenuOpen()">
           <a href="#" class="sub-dot sub-dot-active nav-active-indicator relative mx-2.5 flex cursor-pointer items-center gap-2.5
           rounded-md bg-brand-100/60 py-2 pl-11 pr-3 text-[13px] font-medium text-brand-700 transition-all duration-150">
             Pencairan Panjar
@@ -61,19 +68,26 @@
       <div class="mb-1">
         <p class="px-5 pb-1.5 pt-3 text-[10px] font-semibold uppercase tracking-[1.2px] text-warm-600/70">Laporan</p>
         <button class="nav-parent relative mx-2.5 flex w-[calc(100%-20px)] cursor-pointer items-center gap-2.5 rounded-md px-3 py-2.5
-        text-[13.5px] font-medium text-warm-600 transition-all duration-150 hover:bg-brand-50 hover:text-warm-700">
+        text-[13.5px] font-medium text-warm-600 transition-all duration-150 hover:bg-brand-50 hover:text-warm-700"
+        type="button"
+        (click)="toggleReportMenu()"
+        [attr.aria-expanded]="isReportMenuOpen()">
           <svg class="size-[18px] shrink-0 opacity-70" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
             <path d="M6 2h8l4 4v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4a2 2 0 012-2z"/>
             <path d="M14 2v4h4M8 13h4M8 9h2"/>
           </svg>
           <span class="flex-1 text-left">Laporan</span>
-          <svg class="nav-chevron size-3.5 opacity-40 transition-transform duration-200" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="nav-chevron size-3.5 opacity-40 transition-transform duration-200" [class.rotate-180]="isReportMenuOpen()" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 6l4 4 4-4"/>
           </svg>
         </button>
 
         <!-- SUB ITEMS -->
-        <div class="nav-children hidden overflow-hidden transition-all duration-300">
+        <div class="nav-children overflow-hidden transition-all duration-300"
+        [style.maxHeight]="isReportMenuOpen() ? '140px' : '0px'"
+        [style.opacity]="isReportMenuOpen() ? '1' : '0'"
+        [style.transform]="isReportMenuOpen() ? 'translateY(0)' : 'translateY(-6px)'"
+        [class.pointer-events-none]="!isReportMenuOpen()">
           <a href="#" class="sub-dot relative mx-2.5 flex cursor-pointer items-center gap-2.5 rounded-md py-2 pl-11 pr-3 text-[13px]
           font-normal text-warm-600 transition-all duration-150 hover:bg-brand-50 hover:text-warm-700">
             Laporan Transaksi
@@ -99,8 +113,8 @@
       
       <!-- LEFT -->
       <div class="flex items-center gap-3">
-        <button class="flex size-9 items-center justify-center rounded-md text-warm-600 transition-colors
-        hover:bg-warm-100 hover:text-warm-900">
+        <button class="flex size-9 items-center justify-center rounded-md text-warm-600 cursor-pointer transition-colors
+        hover:bg-warm-100 hover:text-warm-900" type="button" (click)="toggleSidebar()" [attr.aria-expanded]="isSidebarOpen()">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M3 10h14M3 5h14M3 15h14"/>
           </svg>
@@ -116,11 +130,11 @@
       </div>
 
       <!-- RIGHT -->
-      <div class="ml-auto flex items-center gap-1.5">
+      <div class="ml-auto flex items-center gap-1.5" data-user-dropdown>
 
         <!-- NOTIFICATION -->
         <button class="relative flex size-9 items-center justify-center rounded-md border border-warm-200 bg-white
-        text-warm-600 transition-all hover:bg-warm-100 hover:text-warm-900">
+        text-warm-600 transition-all hover:bg-warm-100 hover:text-warm-900" type="button">
             <svg width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M10 2a6 6 0 016 6c0 5 2 6 2 6H2s2-1 2-6a6 6 0 016-6z"/>
               <path d="M8.27 17.73A2 2 0 0011.73 17.73"/>
@@ -134,21 +148,25 @@
         <!-- USER DROPDOWN -->
         <div class="relative ml-1" id="userDropdown">
           <button class="flex cursor-pointer items-center gap-2 rounded-md border border-warm-200 bg-white py-1 pl-1 pr-2.5
-          transition-all hover:bg-warm-100">
+          transition-all hover:bg-warm-100" type="button" (click)="toggleUserMenu()" [attr.aria-expanded]="isUserMenuOpen()">
             <div class="flex size-7 items-center justify-center rounded-md bg-linear-to-br from-brand-700 to-brand-900
             text-[11px] font-bold text-white">
               DM
             </div>
-            <span class="text-[13px] font-semibold text-warm-900">Demo Admin</span>
-            <svg id="userChevron" class="text-warm-300 transition-transform duration-200" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <span class="text-[13px] font-semibold text-warm-900">{{ displayName() }}</span>
+            <svg id="userChevron" class="text-warm-300 transition-transform duration-200" [class.rotate-180]="isUserMenuOpen()" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 6l4 4 4-4"/>
             </svg>
           </button>  
         </div>
 
         <!-- DROPDOWN PANEL -->
-        <div id="userMenu" class="absolute right-0 top-[calc(100%+8px)] z-50 hidden w-56 overflow-hidden rounded-xl border
-        border-warm-200 bg-white shadow-lg">
+        <div id="userMenu" class="user-dropdown-panel absolute right-0 top-[calc(100%+8px)] z-50 w-56 overflow-hidden rounded-xl border
+        border-warm-200 bg-white shadow-lg"
+        [style.opacity]="isUserMenuOpen() ? '1' : '0'"
+        [style.transform]="isUserMenuOpen() ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.98)'"
+        [style.visibility]="isUserMenuOpen() ? 'visible' : 'hidden'"
+        [class.pointer-events-none]="!isUserMenuOpen()">
           
           <!-- HEADER PROFILE -->
           <div class="flex items-center gap-3 border-b border-warm-200 px-4 py-3.5">
@@ -157,7 +175,7 @@
               DM
             </div>
             <div class="min-w-0">
-              <p class="truncate text-[13px] font-semibold text-warm-900">Demo Admin</p>
+              <p class="truncate text-[13px] font-semibold text-warm-900">{{ displayName() }}</p>
               <p class="text-[11px] text-warm-600">
                 <a href="#" class="__cf_email__">[email&#160;protected]</a>
               </p>
@@ -200,7 +218,7 @@
 
           <!-- DIVIDER DAN LOGOUT -->
           <div class="border-t border-warm-200 py-1.5">
-            <button class="flex w-full items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-brand-700 transition-colors
+            <button class="flex w-full items-center gap-3 px-4 py-2.5 text-[13px] font-medium text-brand-700 cursor-pointer transition-colors
             hover:bg-brand-50" type="button" (click)="onLogout()">
               <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7">
                 <path d="M13 10H3M13 10l-3-3M13 10l-3 3M17 3v14"/>

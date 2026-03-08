@@ -164,10 +164,22 @@ html, body {
 .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
 .sidebar-scroll::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-brand-700) 20%, transparent); border-radius: 2px; }
 
-/* Animasi buka/tutup child menu */
+/* Animasi buka/tutup child menu (slide up/down) */
 .nav-children {
     transition: height 0.25s ease, opacity 0.25s ease;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: max-height 0.28s ease, opacity 0.2s ease, transform 0.28s ease;
+    will-change: max-height, opacity, transform;
     overflow: hidden;
+}
+
+/* Animasi dropdown user */
+.user-dropdown-panel {
+    transform-origin: top right;
+    transition: opacity 0.2s ease, transform 0.24s ease, visibility 0.24s ease;
+    will-change: opacity, transform;
 }
 
 /* Sidebar collapse */

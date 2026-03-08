@@ -248,8 +248,11 @@
         <!-- DROPDOWN PANEL -->
         <div
           id="userMenu"
-          class="absolute right-0 top-[calc(100%+8px)] z-50 w-56 overflow-hidden rounded-xl border border-warm-200 bg-white shadow-lg"
-          [class.hidden]="!isUserMenuOpen()"
+          class="user-dropdown-panel absolute right-2 top-[calc(100%+8px)] z-50 w-56 overflow-hidden rounded-xl border border-warm-200 bg-white shadow-lg"
+          [style.opacity]="isUserMenuOpen() ? '1' : '0'"
+          [style.transform]="isUserMenuOpen() ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.98)'"
+          [style.visibility]="isUserMenuOpen() ? 'visible' : 'hidden'"
+          [class.pointer-events-none]="!isUserMenuOpen()"
         >
           <!-- HEADER PROFILE -->
           <div class="flex items-center gap-3 border-b border-warm-200 px-4 py-3.5">

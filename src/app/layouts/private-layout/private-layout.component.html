@@ -80,7 +80,13 @@
         </button>
 
         <!-- SUB ITEMS -->
-        <div class="nav-children overflow-hidden transition-all duration-300" [class.hidden]="!isTransactionMenuOpen()">
+        <div
+          class="nav-children overflow-hidden"
+          [style.maxHeight]="isTransactionMenuOpen() ? '140px' : '0px'"
+          [style.opacity]="isTransactionMenuOpen() ? '1' : '0'"
+          [style.transform]="isTransactionMenuOpen() ? 'translateY(0)' : 'translateY(-6px)'"
+          [class.pointer-events-none]="!isTransactionMenuOpen()"
+        >
           <a
             href="#"
             class="sub-dot sub-dot-active nav-active-indicator relative mx-2.5 flex cursor-pointer items-center gap-2.5 rounded-md bg-brand-100/60 py-2 pl-11 pr-3 text-[13px] font-medium text-brand-700 transition-all duration-150"
@@ -131,7 +137,13 @@
         </button>
 
         <!-- SUB ITEMS -->
-        <div class="nav-children overflow-hidden transition-all duration-300" [class.hidden]="!isReportMenuOpen()">
+        <div
+          class="nav-children overflow-hidden"
+          [style.maxHeight]="isReportMenuOpen() ? '140px' : '0px'"
+          [style.opacity]="isReportMenuOpen() ? '1' : '0'"
+          [style.transform]="isReportMenuOpen() ? 'translateY(0)' : 'translateY(-6px)'"
+          [class.pointer-events-none]="!isReportMenuOpen()"
+        >
           <a
             href="#"
             class="sub-dot relative mx-2.5 flex cursor-pointer items-center gap-2.5 rounded-md py-2 pl-11 pr-3 text-[13px] font-normal text-warm-600 transition-all duration-150 hover:bg-brand-50 hover:text-warm-700"
